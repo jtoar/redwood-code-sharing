@@ -3780,6 +3780,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jtoar/sdk@workspace:*, @jtoar/sdk@workspace:packages/sdk":
+  version: 0.0.0-use.local
+  resolution: "@jtoar/sdk@workspace:packages/sdk"
+  languageName: unknown
+  linkType: soft
+
 "@leichtgewicht/ip-codec@npm:^2.0.1":
   version: 2.0.4
   resolution: "@leichtgewicht/ip-codec@npm:2.0.4"
@@ -6398,7 +6404,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.0.4, acorn@npm:^8.1.0, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.7.1, acorn@npm:^8.8.0, acorn@npm:^8.8.1":
+"acorn@npm:^8.0.4, acorn@npm:^8.1.0, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.7.1, acorn@npm:^8.8.0, acorn@npm:^8.8.1, acorn@npm:^8.8.2":
   version: 8.8.2
   resolution: "acorn@npm:8.8.2"
   bin:
@@ -6655,6 +6661,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "api@workspace:api"
   dependencies:
+    "@jtoar/sdk": "workspace:*"
     "@redwoodjs/api": 6.0.0-canary.434
     "@redwoodjs/fastify": 6.0.0-canary.434+690ef64a5
     "@redwoodjs/graphql-server": 6.0.0-canary.434
@@ -7755,6 +7762,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cac@npm:^6.7.14":
+  version: 6.7.14
+  resolution: "cac@npm:6.7.14"
+  checksum: 4ee06aaa7bab8981f0d54e5f5f9d4adcd64058e9697563ce336d8a3878ed018ee18ebe5359b2430eceae87e0758e62ea2019c3f52ae6e211b1bd2e133856cd10
+  languageName: node
+  linkType: hard
+
 "cacache@npm:^12.0.2":
   version: 12.0.4
   resolution: "cacache@npm:12.0.4"
@@ -8567,7 +8581,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concurrently@npm:8.2.0":
+"concurrently@npm:8.2.0, concurrently@npm:^8.2.0":
   version: 8.2.0
   resolution: "concurrently@npm:8.2.0"
   dependencies:
@@ -13874,6 +13888,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jsonc-parser@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "jsonc-parser@npm:3.2.0"
+  checksum: 5a12d4d04dad381852476872a29dcee03a57439574e4181d91dca71904fcdcc5e8e4706c0a68a2c61ad9810e1e1c5806b5100d52d3e727b78f5cdc595401045b
+  languageName: node
+  linkType: hard
+
 "jsonfile@npm:^6.0.1":
   version: 6.1.0
   resolution: "jsonfile@npm:6.1.0"
@@ -14961,6 +14982,18 @@ __metadata:
   bin:
     mkdirp: dist/cjs/src/bin.js
   checksum: 96f551c651dd8f5f9435d53df1a7b9bfc553be769ee6da5192c37c1f303a376ef1c6996f96913d4a8d357060451d4526a346031d1919f92c58806a5fa3cd8dfe
+  languageName: node
+  linkType: hard
+
+"mlly@npm:^1.2.0":
+  version: 1.3.0
+  resolution: "mlly@npm:1.3.0"
+  dependencies:
+    acorn: ^8.8.2
+    pathe: ^1.1.0
+    pkg-types: ^1.0.3
+    ufo: ^1.1.2
+  checksum: bcc91356e998187b890e3448ddf1d3ff9ececc4ca3ec0317abe76605bb2e4a36f03cdf5697abb719bec027134110cb6ad629dab912620b417a29f1ac57ec22ad
   languageName: node
   linkType: hard
 
@@ -16099,6 +16132,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pathe@npm:^1.1.0":
+  version: 1.1.1
+  resolution: "pathe@npm:1.1.1"
+  checksum: 3ae5a0529c3415d91c3ac9133f52cffea54a0dd46892fe059f4b80faf36fd207957d4594bdc87043b65d0761b1e5728f81f46bafff3b5302da4e2e48889b8c0e
+  languageName: node
+  linkType: hard
+
 "pbkdf2@npm:^3.0.3":
   version: 3.1.2
   resolution: "pbkdf2@npm:3.1.2"
@@ -16200,6 +16240,17 @@ __metadata:
   dependencies:
     find-up: ^4.0.0
   checksum: c56bda7769e04907a88423feb320babaed0711af8c436ce3e56763ab1021ba107c7b0cafb11cde7529f669cfc22bffcaebffb573645cbd63842ea9fb17cd7728
+  languageName: node
+  linkType: hard
+
+"pkg-types@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "pkg-types@npm:1.0.3"
+  dependencies:
+    jsonc-parser: ^3.2.0
+    mlly: ^1.2.0
+    pathe: ^1.1.0
+  checksum: 7f692ff2005f51b8721381caf9bdbc7f5461506ba19c34f8631660a215c8de5e6dca268f23a319dd180b8f7c47a0dc6efea14b376c485ff99e98d810b8f786c4
   languageName: node
   linkType: hard
 
@@ -17735,6 +17786,8 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@redwoodjs/core": 6.0.0-canary.434
+    concurrently: ^8.2.0
+    vite-node: ^0.32.0
   languageName: unknown
   linkType: soft
 
@@ -19661,6 +19714,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ufo@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "ufo@npm:1.1.2"
+  checksum: f19c5e0093447dbebb33cb84bfc2073e4a8a5d3535f44ca3aaa1470a93f394f14896b3a11cd4258fb986ba86b566543ea079244205a06ce35a480d4e613aca6e
+  languageName: node
+  linkType: hard
+
 "unbox-primitive@npm:^1.0.2":
   version: 1.0.2
   resolution: "unbox-primitive@npm:1.0.2"
@@ -20085,6 +20145,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vite-node@npm:^0.32.0":
+  version: 0.32.0
+  resolution: "vite-node@npm:0.32.0"
+  dependencies:
+    cac: ^6.7.14
+    debug: ^4.3.4
+    mlly: ^1.2.0
+    pathe: ^1.1.0
+    picocolors: ^1.0.0
+    vite: ^3.0.0 || ^4.0.0
+  bin:
+    vite-node: vite-node.mjs
+  checksum: e1f7fc18cc47dbda349ab37ccf8ccb612fba698f3f9a9d7c89cc30a9e4425a422bf4be74ce652647d4af4178a40a50ef8b56940f344c39137fcd6c009e59cd28
+  languageName: node
+  linkType: hard
+
 "vite-plugin-commonjs@npm:0.6.2":
   version: 0.6.2
   resolution: "vite-plugin-commonjs@npm:0.6.2"
@@ -20103,7 +20179,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:4.3.9":
+"vite@npm:4.3.9, vite@npm:^3.0.0 || ^4.0.0":
   version: 4.3.9
   resolution: "vite@npm:4.3.9"
   dependencies:
@@ -20285,6 +20361,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:web"
   dependencies:
+    "@jtoar/sdk": "workspace:*"
     "@redwoodjs/forms": 6.0.0-canary.434
     "@redwoodjs/router": 6.0.0-canary.434
     "@redwoodjs/vite": 6.0.0-canary.434+690ef64a5

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@jtoar/sdk": "workspace:*",
     "@redwoodjs/api": "6.0.0-canary.434",
     "@redwoodjs/fastify": "6.0.0-canary.434+690ef64a5",
     "@redwoodjs/graphql-server": "6.0.0-canary.434",

@@ -3,11 +3,14 @@
   "workspaces": {
     "packages": [
       "api",
-      "web"
+      "web",
+      "packages/*"
     ]
   },
   "devDependencies": {
-    "@redwoodjs/core": "6.0.0-canary.434"
+    "@redwoodjs/core": "6.0.0-canary.434",
+    "concurrently": "^8.2.0",
+    "vite-node": "^0.32.0"
   },
   "eslintConfig": {
     "extends": "@redwoodjs/eslint-config",
@@ -20,5 +23,10 @@
   "prisma": {
     "seed": "yarn rw exec seed"
   },
-  "packageManager": "yarn@3.5.1"
+  "packageManager": "yarn@3.5.1",
+  "scripts": {
+    "dev": "concurrently \"yarn dev:api\" \"yarn dev:web\"",
+    "dev:api": "vite-node --watch api/src/server.ts",
+    "dev:web": "cd web && yarn run rw-vite-dev"
+  }
 }

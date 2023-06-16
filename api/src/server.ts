@@ -1,6 +1,7 @@
 import { parseArgs } from 'node:util'
 import path from 'path'
 
+import { sayHiFromJtoarSdk } from '@jtoar/sdk'
 import chalk from 'chalk'
 import { config } from 'dotenv-defaults'
 import Fastify from 'fastify'
@@ -9,16 +10,18 @@ import {
   coerceRootPath,
   redwoodFastifyWeb,
   redwoodFastifyAPI,
-  redwoodFastifyGraphQLServer,
+  // redwoodFastifyGraphQLServer,
   DEFAULT_REDWOOD_FASTIFY_CONFIG,
 } from '@redwoodjs/fastify'
 import { getPaths, getConfig } from '@redwoodjs/project-config'
 
-import directives from 'src/directives/**/*.{js,ts}'
-import sdls from 'src/graphql/**/*.sdl.{js,ts}'
-import services from 'src/services/**/*.{js,ts}'
+// import directives from 'src/directives/**/*.{js,ts}'
+// import sdls from 'src/graphql/**/*.sdl.{js,ts}'
+// import services from 'src/services/**/*.{js,ts}'
 
-import { logger } from './lib/logger'
+// import { logger } from './lib/logger'
+
+console.log(sayHiFromJtoarSdk())
 
 async function serve() {
   // Parse server file args
@@ -64,17 +67,17 @@ async function serve() {
     },
   })
 
-  await fastify.register(redwoodFastifyGraphQLServer, {
-    loggerConfig: {
-      logger: logger,
-    },
-    graphiQLEndpoint: enableWeb ? '/.redwood/functions/graphql' : '/graphql',
-    sdls,
-    services,
-    directives,
-    allowIntrospection: true,
-    allowGraphiQL: true,
-  })
+  // await fastify.register(redwoodFastifyGraphQLServer, {
+  //   loggerConfig: {
+  //     logger: logger,
+  //   },
+  //   graphiQLEndpoint: enableWeb ? '/.redwood/functions/graphql' : '/graphql',
+  //   sdls,
+  //   services,
+  //   directives,
+  //   allowIntrospection: true,
+  //   allowGraphiQL: true,
+  // })
 
   // Start
   fastify.listen({ port })

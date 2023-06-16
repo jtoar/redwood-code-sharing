@@ -1,0 +1,9 @@
+{
+  "name": "@jtoar/sdk",
+  "version": "0.0.1",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts"
+    }
+  }
+}
