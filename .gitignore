@@ -19,3 +19,6 @@ api/src/lib/generateGraphiQLHeader.*
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+!node_modules/@redwoodjs/cli/dist/commands/dev.js
+!node_modules/@redwoodjs/cli/dist/commands/devHandler.js
