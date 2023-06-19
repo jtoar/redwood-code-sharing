@@ -96,9 +96,24 @@ async function serve() {
     console.log(`GraphQL function endpoint at ${graphqlEnd}`)
   })
 
-  process.on('exit', () => {
-    fastify.close()
-  })
+  // process.on('exit', async () => {
+  //   await fastify.close()
+  // })
+
+  // Vite recommends doing this for tree-shaking, but not sure if it applies here...
+  // See https://vitejs.dev/guide/api-hmr.html#required-conditional-guard.
+  //
+  // This only works in ESM.
+  //
+  // @ts-expect-error This is for vite-node.
+  if (import.meta.hot) {
+    // See https://github.com/vitest-dev/vitest/issues/2334#issuecomment-1322180877.
+    //
+    // @ts-expect-error This is for vite-node.
+    import.meta.hot.on("vite:beforeFullReload", async () => {
+      await fastify.close()
+    });
+  }
 }
 
 serve()

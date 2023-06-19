@@ -26,7 +26,7 @@
   "packageManager": "yarn@3.5.1",
   "scripts": {
     "dev": "concurrently \"yarn dev:api\" \"yarn dev:web\"",
-    "dev:api": "vite-node --watch api/src/server.ts",
+    "dev:api": "vite-node --watch api/src/server.mts",
     "dev:web": "cd web && yarn run rw-vite-dev"
   }
 }
