@@ -8,7 +8,7 @@
     ]
   },
   "devDependencies": {
-    "@redwoodjs/core": "6.0.0-canary.434",
+    "@redwoodjs/core": "6.0.0-canary.570",
     "concurrently": "^8.2.0",
     "vite-node": "^0.32.0"
   },

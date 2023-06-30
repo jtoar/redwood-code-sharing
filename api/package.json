@@ -4,10 +4,10 @@
   "private": true,
   "dependencies": {
     "@jtoar/sdk": "workspace:*",
-    "@redwoodjs/api": "6.0.0-canary.434",
-    "@redwoodjs/fastify": "6.0.0-canary.434+690ef64a5",
-    "@redwoodjs/graphql-server": "6.0.0-canary.434",
-    "@redwoodjs/project-config": "6.0.0-canary.434+690ef64a5",
+    "@redwoodjs/api": "6.0.0-canary.570",
+    "@redwoodjs/fastify": "6.0.0-canary.570",
+    "@redwoodjs/graphql-server": "6.0.0-canary.570",
+    "@redwoodjs/project-config": "6.0.0-canary.570",
     "chalk": "4.1.2",
     "fastify": "^4.18.0"
   }

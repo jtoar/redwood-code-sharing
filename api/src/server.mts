@@ -19,7 +19,16 @@ import { getPaths, getConfig } from '@redwoodjs/project-config'
 // import sdls from 'src/graphql/**/*.sdl.{js,ts}'
 // import services from 'src/services/**/*.{js,ts}'
 
+// Import if using RedwoodJS Realtime and subscriptions
+// import subscriptions from 'src/subscriptions/**/*.{js,ts}'
+
+// Import if using RedwoodJS authentication
+// import { authDecoder } from '@redwoodjs/<your-auth-provider>'
+// import { getCurrentUser } from 'src/lib/auth'
 // import { logger } from './lib/logger'
+
+// Import if using RedwoodJS Realtime via `yarn rw exp setup-realtime`
+// import { pubSub, liveQueryStore } from './lib/realtime'
 
 console.log(sayHiFromJtoarSdk())
 
@@ -68,6 +77,9 @@ async function serve() {
   })
 
   // await fastify.register(redwoodFastifyGraphQLServer, {
+  //   // If authenticating, be sure to import and add in
+  //   // authDecoder,
+  //   // getCurrentUser,
   //   loggerConfig: {
   //     logger: logger,
   //   },
@@ -77,6 +89,11 @@ async function serve() {
   //   directives,
   //   allowIntrospection: true,
   //   allowGraphiQL: true,
+  //   // Configure if using RedwoodJS Realtime via `yarn rw exp setup-realtime`
+  //   // realtime: {
+  //   //   subscriptions: { subscriptions, pubSub },
+  //   //   liveQueries: { liveQueryStore },
+  //   // },
   // })
 
   // Start
