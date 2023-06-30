@@ -1,121 +1,93 @@
 # README
 
-Welcome to [RedwoodJS](https://redwoodjs.com)!
+This is a proof of concept (POC) of code sharing in Redwood projects.
+This is based on the work done by all the great developers at [Snaplet](https://www.snaplet.dev/).
 
-> **Prerequisites**
->
-> - Redwood requires [Node.js](https://nodejs.org/en/) (>=18.x) and [Yarn](https://yarnpkg.com/) (>=1.15)
-> - Are you on Windows? For best results, follow our [Windows development setup](https://redwoodjs.com/docs/how-to/windows-development-setup) guide
+Code sharing means what it says, but it doesn't hurt to be a little more specific.
+By code sharing, I mean having code that can be shared between the api and web sides.
+Right now, Redwood has no opnion on how this is done nor does it have any facilities to make it happen.
 
-Start by installing dependencies:
+This POC relies on several 1) preview and 2) experimental features to make it happen:
+- Vite for the web side (preview) and [Vite Node](https://www.npmjs.com/package/vite-node) for the api side (very experimental)
+- The server file (experimental)
+- ESM in Redwood projects (very experimental)
 
-```
-yarn install
-```
+First, some caveats:
+- I haven't tried deploying this; I'm not even sure how the shared code should be built.
 
-Then change into that directory and start the development server:
+Without belabouring it too much, this is more-or-less the way it works:
 
-```
-cd my-redwood-project
-yarn redwood dev
-```
+- This project is on the v6 canary; it may not work with earlier versions
+- Code that's meant to be shared goes into a package in the `packages` directory. For example, this repo has a package called `@jtoar/sdk` in the `packages/sdk` directory.
+  - The project-level package.json needs to be configured to recognize this new directory as a workspace:
 
-Your browser should automatically open to http://localhost:8910 where you'll see the Welcome Page, which links to many great resources.
+    ```json
+    // package.json
+    // ...
+    "workspaces": {
+      "packages": [
+        "api",
+        "web",
+        "packages/*" // 👈
+      ]
+    },
+    // ...
+    ```
 
-> **The Redwood CLI**
->
-> Congratulations on running your first Redwood CLI command!
-> From dev to deploy, the CLI is with you the whole way.
-> And there's quite a few commands at your disposal:
-> ```
-> yarn redwood --help
-> ```
-> For all the details, see the [CLI reference](https://redwoodjs.com/docs/cli-commands).
+- The sides that want to use the code from the shared package (which should be both the api and web sides) should list the package as a dependency in their workspace using [yarn's workspace resolution](https://yarnpkg.com/features/workspaces#workspace-ranges-workspace):
 
-## Prisma and the database
+  ```json
+  // api/package.json
+  // ...
+  "dependencies": {
+    "@jtoar/sdk": "workspace:*", // 👈
+    // ...
+  }
+  // ...
+  ```
 
-Redwood wouldn't be a full-stack framework without a database. It all starts with the schema. Open the [`schema.prisma`](api/db/schema.prisma) file in `api/db` and replace the `UserExample` model with the following `Post` model:
+  ```json
+  // web/package.json
+  // ...
+  "dependencies": {
+    "@jtoar/sdk": "workspace:*", // 👈
+    // ...
+  },
+  // ...
+  ```
 
-```
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  body      String
-  createdAt DateTime @default(now())
-}
-```
+- Vite and TS config files are configured to understand a custom import condition, "development", which points straight to a TS file. This lets the api and web side import from the shared-code package without it having to be built, making for a super slick DX. (When it works.)
+- The package containing shared code must list the "development" exports first—it's imperative that it's first:
 
-Redwood uses [Prisma](https://www.prisma.io/), a next-gen Node.js and TypeScript ORM, to talk to the database. Prisma's schema offers a declarative way of defining your app's data models. And Prisma [Migrate](https://www.prisma.io/migrate) uses that schema to make database migrations hassle-free:
+  ```json
+  // packages/sdk/package.json
+  // ...
+  "exports": {
+    ".": {
+      "development": "./src/index.ts", 👈 Must come first
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  ```
 
-```
-yarn rw prisma migrate dev
+  > Vite has a list of "allowed conditions" and will match the first condition that is in the allowed list
+  >
+  > Source: https://vitejs.dev/config/shared-options.html#resolve-conditions.
 
-# ...
+- The api side dev server must be started using vite-node, like this:
 
-? Enter a name for the new migration: › create posts
-```
+  ```
+  vite-node --watch api/src/server.mts
+  ```
 
-> `rw` is short for `redwood`
+- The server file must be ESM for hot reloading to work:
 
-You'll be prompted for the name of your migration. `create posts` will do.
-
-Now let's generate everything we need to perform all the CRUD (Create, Retrieve, Update, Delete) actions on our `Post` model:
-
-```
-yarn redwood g scaffold post
-```
-
-Navigate to http://localhost:8910/posts/new, fill in the title and body, and click "Save":
-
-Did we just create a post in the database? Yup! With `yarn rw g scaffold <model>`, Redwood created all the pages, components, and services necessary to perform all CRUD actions on our posts table.
-
-## Frontend first with Storybook
-
-Don't know what your data models look like?
-That's more than ok—Redwood integrates Storybook so that you can work on design without worrying about data.
-Mockup, build, and verify your React components, even in complete isolation from the backend:
-
-```
-yarn rw storybook
-```
-
-Before you start, see if the CLI's `setup ui` command has your favorite styling library:
-
-```
-yarn rw setup ui --help
-```
-
-## Testing with Jest
-
-It'd be hard to scale from side project to startup without a few tests.
-Redwood fully integrates Jest with the front and the backends and makes it easy to keep your whole app covered by generating test files with all your components and services:
-
-```
-yarn rw test
-```
-
-To make the integration even more seamless, Redwood augments Jest with database [scenarios](https://redwoodjs.com/docs/testing.md#scenarios)  and [GraphQL mocking](https://redwoodjs.com/docs/testing.md#mocking-graphql-calls).
-
-## Ship it
-
-Redwood is designed for both serverless deploy targets like Netlify and Vercel and serverful deploy targets like Render and AWS:
-
-```
-yarn rw setup deploy --help
-```
-
-Don't go live without auth!
-Lock down your front and backends with Redwood's built-in, database-backed authentication system ([dbAuth](https://redwoodjs.com/docs/authentication#self-hosted-auth-installation-and-setup)), or integrate with nearly a dozen third party auth providers:
-
-```
-yarn rw setup auth --help
-```
-
-## Next Steps
-
-The best way to learn Redwood is by going through the comprehensive [tutorial](https://redwoodjs.com/docs/tutorial/foreword) and joining the community (via the [Discourse forum](https://community.redwoodjs.com) or the [Discord server](https://discord.gg/redwoodjs)).
-
-## Quick Links
-
-- Stay updated: read [Forum announcements](https://community.redwoodjs.com/c/announcements/5), follow us on [Twitter](https://twitter.com/redwoodjs), and subscribe to the [newsletter](https://redwoodjs.com/newsletter)
-- [Learn how to contribute](https://redwoodjs.com/docs/contributing)
+  ```ts
+  if (import.meta.hot) {
+    import.meta.hot.on("vite:beforeFullReload", async () => {
+      await fastify.close()
+    });
+  }
+  ```
