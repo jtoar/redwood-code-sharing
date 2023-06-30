@@ -1,9 +1,23 @@
 {
   "name": "@jtoar/sdk",
   "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "development": "./src/index.ts"
+      "development": "./src/index.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts"
+  },
+  "devDependencies": {
+    "tsup": "7.1.0"
   }
 }

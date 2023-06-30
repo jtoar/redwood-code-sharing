@@ -14,6 +14,9 @@ dns.setDefaultResultOrder('verbatim')
  */
 const viteConfig: UserConfig = {
   plugins: [redwood()],
+  resolve: {
+    conditions: ['development'],
+  },
 }
 
 export default defineConfig(viteConfig)

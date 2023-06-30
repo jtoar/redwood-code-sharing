@@ -4,8 +4,8 @@
     "allowJs": true,
     "esModuleInterop": true,
     "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "skipLibCheck": false,
     "baseUrl": "./",
     "rootDirs": [
@@ -24,12 +24,16 @@
       "../node_modules/@types",
       "./node_modules/@types"
     ],
-    "types": ["jest"]
+    "types": ["jest"],
+    "customConditions": ["development"]
   },
   "include": [
     "src",
     "../.redwood/types/includes/all-*",
     "../.redwood/types/includes/api-*",
     "../types"
+  ],
+  "references": [
+    { "path": "../packages/sdk" }
   ]
 }
